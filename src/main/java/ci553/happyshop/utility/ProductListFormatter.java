@@ -3,6 +3,7 @@ package ci553.happyshop.utility;
 import ci553.happyshop.catalogue.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This class builds a formatted, receipt-like summary from a list of products.
@@ -21,12 +22,14 @@ public class ProductListFormatter {
     public static String buildString(ArrayList<Product> proList) {
         StringBuilder sb = new StringBuilder();
         double totalPrice=0;
+        int totalQuant=0;
+        Collections.sort(proList);
         for (Product pr : proList) {
             int orderedQuantity = pr.getOrderedQuantity();
             //%-18.18s, format the argument as a String,
             // -18 → Left-align the string in 18-character wide space.
             //.18 → Truncate the string to at most 18 characters
-            String aProduct=String.format(" %-7s %-18.18s (%2d) £%7.2f\n",
+            String aProduct=String.format(" %-5s %-15.15s (%3d) £%,9.2f\n", //sum of length: 37
                     pr.getProductId(),
                     pr.getProductDescription(),
                     pr.getOrderedQuantity(),
@@ -34,10 +37,11 @@ public class ProductListFormatter {
 
             sb.append(aProduct);
             totalPrice = totalPrice + pr.getUnitPrice() * orderedQuantity;
+            totalQuant = totalQuant + orderedQuantity;
         }
 
-        String lineSeparator = "-".repeat(44) + "\n";
-        String total = String.format(" %-35s £%7.2f\n", "Total", totalPrice);
+        String lineSeparator = "-".repeat(40) + "\n";
+        String total = String.format(" %-21s (%3d) £%,9.2f\n", "Total",totalQuant, totalPrice); // sum of length: 37
 
         sb.append(lineSeparator);
         sb.append(total);
