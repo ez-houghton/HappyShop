@@ -38,8 +38,8 @@ public class CustomerView  {
     private VBox vbTrolleyPage;  //vbTrolleyPage and vbReceiptPage will swap with each other when need
     private VBox vbReceiptPage;
 
-    TextField tfId; //for user input on the search page. Made accessible so it can be accessed or modified by CustomerModel
-    TextField tfName; //for user input on the search page. Made accessible so it can be accessed by CustomerModel
+    //TextField tfId; //for user input on the search page. Made accessible so it can be accessed or modified by CustomerModel
+    TextField tfSearch; //for user input on the search page. Made accessible so it can be accessed by CustomerModel
 
     //four controllers needs updating when program going on
     private ImageView ivProduct; //image area in searchPage
@@ -80,19 +80,13 @@ public class CustomerView  {
         Label laPageTitle = new Label("Search by Product ID/Name");
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
 
-        Label laId = new Label("ID:      ");
-        laId.setStyle(UIStyle.labelStyle);
-        tfId = new TextField();
-        tfId.setPromptText("eg. 0001");
-        tfId.setStyle(UIStyle.textFiledStyle);
-        HBox hbId = new HBox(10, laId, tfId);
 
         Label laName = new Label("Name:");
         laName.setStyle(UIStyle.labelStyle);
-        tfName = new TextField();
-        tfName.setPromptText("implement it if you want");
-        tfName.setStyle(UIStyle.textFiledStyle);
-        HBox hbName = new HBox(10, laName, tfName);
+        tfSearch = new TextField();
+        tfSearch.setPromptText("Product Name");
+        tfSearch.setStyle(UIStyle.textFiledStyle);
+        HBox hbName = new HBox(10, laName, tfSearch);
 
         Label laPlaceHolder = new Label(  " ".repeat(15)); //create left-side spacing so that this HBox aligns with others in the layout.
         Button btnSearch = new Button("Search");
@@ -116,7 +110,7 @@ public class CustomerView  {
         HBox hbSearchResult = new HBox(5, ivProduct, lbProductInfo);
         hbSearchResult.setAlignment(Pos.CENTER_LEFT);
 
-        VBox vbSearchPage = new VBox(15, laPageTitle, hbId, hbName, hbBtns, hbSearchResult);
+        VBox vbSearchPage = new VBox(15, laPageTitle, hbName, hbBtns, hbSearchResult);
         vbSearchPage.setPrefWidth(COLUMN_WIDTH);
         vbSearchPage.setAlignment(Pos.TOP_CENTER);
         vbSearchPage.setStyle("-fx-padding: 15px;");
@@ -159,7 +153,7 @@ public class CustomerView  {
         taReceipt = new TextArea();
         taReceipt.setEditable(false);
         taReceipt.setPrefSize(WIDTH/2, HEIGHT-50);
-
+        taReceipt.setFont(Font.font("Monospace"));
         Button btnCloseReceipt = new Button("OK & Close"); //btn for closing receipt and showing trolley page
         btnCloseReceipt.setStyle(UIStyle.buttonStyle);
 

@@ -44,6 +44,9 @@ public record UIStyle() {
     public static final int EmergencyExitWinWidth = 200;
     public static final int EmergencyExitWinHeight = 300;
 
+    public static final int selectWindowWidth = customerWinWidth +160;
+    public static final int selectWindowHeight = 230;
+
     public static final String labelTitleStyle ="-fx-font-weight: bold; " +
             "-fx-font-size: 16px; -fx-text-fill: purple;";
 

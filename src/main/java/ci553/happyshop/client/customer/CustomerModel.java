@@ -35,41 +35,55 @@ public class CustomerModel {
     private String displayTaReceipt = "";                                // Text area content showing receipt after checkout (Receipt Page)
 
     //SELECT productID, description, image, unitPrice,inStock quantity
-    void search() throws SQLException {
-        String productId = cusView.tfId.getText().trim();
-        if(!productId.isEmpty()){
-            theProduct = databaseRW.searchByProductId(productId); //search database
-            if(theProduct != null && theProduct.getStockQuantity()>0){
+
+    /**
+     *
+     * @return bool value on if search worked.
+     * @throws SQLException
+     */
+
+    boolean search() throws SQLException{
+        String prodInput = cusView.tfSearch.getText().trim();
+        if(!prodInput.isEmpty()){
+            theProduct= databaseRW.searchByProductId(prodInput);
+            if(theProduct==null){
+                theProduct=searchByName(prodInput);
+            }
+            if(theProduct!=null){
+                String productId = theProduct.getProductId();
                 double unitPrice = theProduct.getUnitPrice();
                 String description = theProduct.getProductDescription();
                 int stock = theProduct.getStockQuantity();
-
                 String baseInfo = String.format("Product_Id: %s\n%s,\nPrice: £%.2f", productId, description, unitPrice);
                 String quantityInfo = stock < 100 ? String.format("\n%d units left.", stock) : "";
                 displayLaSearchResult = baseInfo + quantityInfo;
                 System.out.println(displayLaSearchResult);
+            }else{
+                displayLaSearchResult = "No Product was found with given search term: " + prodInput;
+                System.out.println("No Product was found with search term: " + prodInput);
             }
-            else{
-                theProduct=null;
-                displayLaSearchResult = "No Product was found with ID " + productId;
-                System.out.println("No Product was found with ID " + productId);
-            }
-        }else{
-            theProduct=null;
-            displayLaSearchResult = "Please type ProductID";
-            System.out.println("Please type ProductID.");
-        }
-        updateView();
+            updateView();
+            return theProduct!=null;
+        }return false;
     }
+
+    private Product searchByName(String prodInput) throws SQLException{
+        SelectProductWindow productWindow = new SelectProductWindow();
+        productWindow.cusView=cusView;
+        ArrayList<Product> prodList= databaseRW.searchProduct(prodInput);
+        if (prodList.size()>1){
+            productWindow.createWindow(prodList);
+            return productWindow.selected;
+        }else{return prodList.getFirst();}
+    }
+
 
     void addToTrolley(){
         if(theProduct!= null){
 
             // trolley.add(theProduct) — Product is appended to the end of the trolley.
             // To keep the trolley organized, add code here or call a method that:
-            //TODO
-            // 1. Merges items with the same product ID (combining their quantities). DONE
-            // 2. Sorts the products in the trolley by product ID.
+
             trolley.add(theProduct);
             displayTaTrolley = ProductListFormatter.buildString(groupProductsById(trolley)); //build a String for trolley so that we can show it
         }
