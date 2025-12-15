@@ -21,9 +21,9 @@ import java.util.ArrayList;
 
 public class SelectProductWindow {
     public CustomerView cusView; //tracking the window of cusView
-    public boolean closed = false;
-    private static int WIDTH = UIStyle.selectWindowWidth;
-    private static int HEIGHT = UIStyle.selectWindowHeight;
+
+    private final int WIDTH = UIStyle.selectWindowWidth;
+    private final int HEIGHT = UIStyle.selectWindowHeight;
 
     private Stage window; //window for Select Product
     private Scene scene; // Scene for Select Product

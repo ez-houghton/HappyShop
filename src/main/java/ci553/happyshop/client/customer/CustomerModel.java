@@ -37,12 +37,10 @@ public class CustomerModel {
     //SELECT productID, description, image, unitPrice,inStock quantity
 
     /**
-     *
-     * @return bool value on if search worked.
+     * Searches database for products matching the name or ID in the Search box
      * @throws SQLException
      */
-
-    boolean search() throws SQLException{
+    void search() throws SQLException{
         String prodInput = cusView.tfSearch.getText().trim();
         if(!prodInput.isEmpty()){
             theProduct= databaseRW.searchByProductId(prodInput);
@@ -63,10 +61,16 @@ public class CustomerModel {
                 System.out.println("No Product was found with search term: " + prodInput);
             }
             updateView();
-            return theProduct!=null;
-        }return false;
+
+        }
     }
 
+    /**
+     * Searches database for product by name. opens a window to specify selection if more than one result returned.
+     * @param prodInput searchable name
+     * @return Product which is selected.
+     * @throws SQLException
+     */
     private Product searchByName(String prodInput) throws SQLException{
         SelectProductWindow productWindow = new SelectProductWindow();
         productWindow.cusView=cusView;
