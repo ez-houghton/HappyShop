@@ -107,7 +107,7 @@ public record UIStyle() {
     public static final String alertBtnStyle ="-fx-background-color: green; " +
             "-fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold;";
 
-    public static final String alertTitleLabelStyle = "-fx-font-size: 16px; " +
+    public static final String alertTitleLabelStyle = "-fx-font-size: 10px; " +
             "-fx-font-weight: bold; " +
             "-fx-text-fill: red; " + "-fx-background-color: lightblue;";
 

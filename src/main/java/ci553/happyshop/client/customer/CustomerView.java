@@ -45,7 +45,7 @@ public class CustomerView  {
     //four controllers needs updating when program going on
     private ImageView ivProduct; //image area in searchPage
     private Label lbProductInfo;//product text info in searchPage
-
+    private Label laTrolleyError;
     private VBox vbTrolley; //in trolley Page
     private TextArea taReceipt;//in receipt page
 
@@ -128,7 +128,8 @@ public class CustomerView  {
         /*taTrolley.setFont(Font.font("Monospace"));
         taTrolley.setEditable(false);
         taTrolley.setPrefSize(WIDTH/2, HEIGHT-50);
-*/
+*/      laTrolleyError = new Label();
+        laTrolleyError.setStyle(UIStyle.alertTitleLabelStyle);
         Button btnCancel = new Button("Cancel");
         btnCancel.setOnAction(this::buttonClicked);
         btnCancel.setStyle(UIStyle.buttonStyle);
@@ -141,7 +142,7 @@ public class CustomerView  {
         hbBtns.setStyle("-fx-padding: 15px;");
         hbBtns.setAlignment(Pos.CENTER);
 
-        vbTrolleyPage = new VBox(15, laPageTitle, vbTrolley, hbBtns);
+        vbTrolleyPage = new VBox(15, laPageTitle, vbTrolley,laTrolleyError, hbBtns);
         vbTrolleyPage.setPrefWidth(COLUMN_WIDTH);
         vbTrolleyPage.setAlignment(Pos.TOP_CENTER);
         vbTrolleyPage.setStyle("-fx-padding: 15px;");
@@ -189,12 +190,13 @@ public class CustomerView  {
     }
 
 
-    public void update(String imageName, String searchResult, ArrayList<Node> trolley, String receipt) {
+    public void update(String imageName, String searchResult, ArrayList<Node> trolley, String TrolleyError, String receipt) {
 
         ivProduct.setImage(new Image(imageName));
         lbProductInfo.setText(searchResult);
         vbTrolley.getChildren().clear();
         vbTrolley.getChildren().addAll(trolley);
+        laTrolleyError.setText(TrolleyError);
         if (!receipt.isEmpty()) {
             showTrolleyOrReceiptPage(vbReceiptPage);
             taReceipt.setText(receipt);

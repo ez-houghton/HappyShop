@@ -16,10 +16,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * TODO
@@ -90,14 +87,9 @@ public class CustomerModel {
 
     void addToTrolley(){
         if(theProduct!= null){
-
             // trolley.add(theProduct) — Product is appended to the end of the trolley.
             // To keep the trolley organized, add code here or call a method that:
-
             trolley.add(theProduct);
-            displayTaTrolley = ProductListFormatter.buildString(groupProductsById(trolley)); //build a String for trolley so that we can show it
-
-
         }
         else{
             displayLaSearchResult = "Please search for an available product before adding it to the trolley";
@@ -141,13 +133,9 @@ public class CustomerModel {
                 }
                 theProduct=null;
 
-                //TODO
-                // Add the following logic here:
-                // 1. Remove products with insufficient stock from the trolley.
-                // 2. Trigger a message window to notify the customer about the insufficient stock, rather than directly changing displayLaSearchResult.
                 //You can use the provided RemoveProductNotifier class and its showRemovalMsg method for this purpose.
                 //remember close the message window where appropriate (using method closeNotifierWindow() of RemoveProductNotifier class)
-                displayLaSearchResult = "Checkout failed due to insufficient stock for the following products:\n" + errorMsg.toString();
+                displayTaTrolley = "Checkout failed due to insufficient stock:\n" + errorMsg.toString();
                 System.out.println("stock is not enough");
             }
         }
@@ -175,7 +163,9 @@ public class CustomerModel {
                         p.getProductImageName(),p.getUnitPrice(),p.getStockQuantity()));
             }
         }
-        return new ArrayList<>(grouped.values());
+        ArrayList<Product> ret = new ArrayList<Product>(grouped.values());
+        Collections.sort(ret);
+        return ret;
     }
 
     void cancel(){
@@ -193,41 +183,36 @@ public class CustomerModel {
             addButton.setOnAction(actionEvent -> {
                 pr.setOrderedQuantity(1);
                 trolley.add(pr);
-                System.out.println("Ordered quant:"+pr.getOrderedQuantity());
                 updateView();
             });
             Button subButton = new Button("-");
             subButton.setOnAction(actionEvent -> {
-
                 for(Product i : trolley){
                     if( i.getProductId().equals(pr.getProductId()))   {
                         trolley.remove(i);
-                        break;
-                    }
+                        break;}
                 }
-                System.out.println(trolley);
-                System.out.println("Ordered quant:"+pr.getOrderedQuantity());
                 updateView();
             });
             subButton.setPadding(new Insets(2,0,2,0));
             addButton.setPadding(new Insets(2,0,2,0));
-            subButton.setMinWidth(20);
-            addButton.setMinWidth(20);
+            subButton.setMinWidth(20);      addButton.setMinWidth(20);
             TextField pID = new TextField(pr.getProductId());
-            pID.setEditable(false);
-            pID.setPrefWidth(110);
+            pID.setEditable(false);         pID.setPrefWidth(110);
             pID.setPadding(new Insets(2,0,2,0));
+
             TextField pDesc = new TextField(pr.getProductDescription());
-            pDesc.setEditable(false);
-            pDesc.setPrefWidth(200);
+            pDesc.setEditable(false);        pDesc.setPrefWidth(200);
             pDesc.setPadding(new Insets(2,0,2,0));
+
             TextField pQuant = new TextField(Integer.toString(pr.getOrderedQuantity()));
-            pQuant.setPrefWidth(100);
-            pQuant.setEditable(false);
+            pQuant.setPrefWidth(100);    pQuant.setEditable(false);
             pQuant.setPadding(new Insets(2,0,2,0));
-            TextField pPrice = new TextField(Double.toString(pr.getOrderedQuantity() * pr.getUnitPrice()));
+
+            TextField pPrice = new TextField(String.format("%.2f",(pr.getOrderedQuantity() * pr.getUnitPrice())));
             pPrice.setEditable(false);
             pPrice.setPadding(new Insets(2,0,2,0));
+
             HBox itemInfo = new HBox(addButton,subButton,pID, pDesc, pQuant, pPrice);
             trolleyList.add(itemInfo);
         }
@@ -246,7 +231,7 @@ public class CustomerModel {
             imageName = "imageHolder.jpg";
         }
 
-        cusView.update(imageName, displayLaSearchResult, createTrolleyList(),displayTaReceipt);
+        cusView.update(imageName, displayLaSearchResult, createTrolleyList(),displayTaTrolley,displayTaReceipt);
     }
      // extra notes:
      //Path.toUri(): Converts a Path object (a file or a directory path) to a URI object.
