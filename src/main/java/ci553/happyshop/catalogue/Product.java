@@ -1,5 +1,7 @@
 package ci553.happyshop.catalogue;
 
+import java.util.Objects;
+
 /**
  * The Product class used to hold the information about a product:
  *

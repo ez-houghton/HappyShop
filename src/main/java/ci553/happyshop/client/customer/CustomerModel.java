@@ -6,6 +6,11 @@ import ci553.happyshop.storageAccess.DatabaseRW;
 import ci553.happyshop.orderManagement.OrderHub;
 import ci553.happyshop.utility.StorageLocation;
 import ci553.happyshop.utility.ProductListFormatter;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -14,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * TODO
@@ -32,8 +38,7 @@ public class CustomerModel {
     private String imageName = "imageHolder.jpg";                // Image to show in product preview (Search Page)
     private String displayLaSearchResult = "No Product was searched yet"; // Label showing search result message (Search Page)
     private String displayTaTrolley = "";                                // Text area content showing current trolley items (Trolley Page)
-    private String displayTaReceipt = "";                                // Text area content showing receipt after checkout (Receipt Page)
-
+    private String displayTaReceipt = "";                                // Text area content showing receipt after checkout (Receipt Page);
     //SELECT productID, description, image, unitPrice,inStock quantity
 
     /**
@@ -78,7 +83,8 @@ public class CustomerModel {
         if (prodList.size()>1){
             productWindow.createWindow(prodList);
             return productWindow.selected;
-        }else{return prodList.getFirst();}
+        }else if(prodList.size()==1){return prodList.getFirst();}
+        else{return null;}
     }
 
 
@@ -90,6 +96,8 @@ public class CustomerModel {
 
             trolley.add(theProduct);
             displayTaTrolley = ProductListFormatter.buildString(groupProductsById(trolley)); //build a String for trolley so that we can show it
+
+
         }
         else{
             displayLaSearchResult = "Please search for an available product before adding it to the trolley";
@@ -178,7 +186,53 @@ public class CustomerModel {
     void closeReceipt(){
         displayTaReceipt="";
     }
+    private ArrayList<Node> createTrolleyList(){
+        ArrayList<Node> trolleyList= new ArrayList<>();
+        for(Product pr : groupProductsById(trolley)) {
+            Button addButton = new Button("+");
+            addButton.setOnAction(actionEvent -> {
+                pr.setOrderedQuantity(1);
+                trolley.add(pr);
+                System.out.println("Ordered quant:"+pr.getOrderedQuantity());
+                updateView();
+            });
+            Button subButton = new Button("-");
+            subButton.setOnAction(actionEvent -> {
 
+                for(Product i : trolley){
+                    if( i.getProductId().equals(pr.getProductId()))   {
+                        trolley.remove(i);
+                        break;
+                    }
+                }
+                System.out.println(trolley);
+                System.out.println("Ordered quant:"+pr.getOrderedQuantity());
+                updateView();
+            });
+            subButton.setPadding(new Insets(2,0,2,0));
+            addButton.setPadding(new Insets(2,0,2,0));
+            subButton.setMinWidth(20);
+            addButton.setMinWidth(20);
+            TextField pID = new TextField(pr.getProductId());
+            pID.setEditable(false);
+            pID.setPrefWidth(110);
+            pID.setPadding(new Insets(2,0,2,0));
+            TextField pDesc = new TextField(pr.getProductDescription());
+            pDesc.setEditable(false);
+            pDesc.setPrefWidth(200);
+            pDesc.setPadding(new Insets(2,0,2,0));
+            TextField pQuant = new TextField(Integer.toString(pr.getOrderedQuantity()));
+            pQuant.setPrefWidth(100);
+            pQuant.setEditable(false);
+            pQuant.setPadding(new Insets(2,0,2,0));
+            TextField pPrice = new TextField(Double.toString(pr.getOrderedQuantity() * pr.getUnitPrice()));
+            pPrice.setEditable(false);
+            pPrice.setPadding(new Insets(2,0,2,0));
+            HBox itemInfo = new HBox(addButton,subButton,pID, pDesc, pQuant, pPrice);
+            trolleyList.add(itemInfo);
+        }
+        return trolleyList;
+    }
     void updateView() {
         if(theProduct != null){
             imageName = theProduct.getProductImageName();
@@ -191,7 +245,8 @@ public class CustomerModel {
         else{
             imageName = "imageHolder.jpg";
         }
-        cusView.update(imageName, displayLaSearchResult, displayTaTrolley,displayTaReceipt);
+
+        cusView.update(imageName, displayLaSearchResult, createTrolleyList(),displayTaReceipt);
     }
      // extra notes:
      //Path.toUri(): Converts a Path object (a file or a directory path) to a URI object.
