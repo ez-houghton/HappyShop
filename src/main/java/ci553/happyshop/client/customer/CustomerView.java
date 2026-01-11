@@ -187,7 +187,9 @@ public class CustomerView  {
         vbTrolley.getChildren().clear();
         vbTrolley.getChildren().addAll(trolley);
         if(!trolleyError.isEmpty()){
-            System.out.println("trolleyerror");
+            TrolleyErrorWindow t = new TrolleyErrorWindow();
+            t.cusView=this;
+            t.createWindow(trolleyError);
         }
         if (!receipt.isEmpty()) {
             showTrolleyOrReceiptPage(vbReceiptPage);
