@@ -53,14 +53,14 @@ public record UIStyle() {
     public static final String labelStyle = "-fx-font-weight: bold; " +
             "-fx-font-size: 14px; " +
             "-fx-text-fill: black; " +
-            "-fx-background-color: lightblue;";
+            "-fx-background-color: transparent;";
 
     public static final String comboBoxStyle ="-fx-font-weight: bold; " +
-            "-fx-font-size: 14px;";
+            "-fx-font-size: 14px;" +
+            "-fx-border:0;" +
+            "-fx-border-radius:0;" +
+            "-fx-background-color:#00cc00";
 
-    /*customer window*/
-    public static final String rootStyle = "-fx-padding: 8px; " +
-            "-fx-background-color: #f2f2f2;";
     public static final String trolleyStyle = "-fx-font-size:12px;" +
             "-fx-padding:2px,0px,2px,0px;" +
             "-fx-margin:0;" +
@@ -80,15 +80,28 @@ public record UIStyle() {
 
     public static final String rootStyleGray = "-fx-padding: 8px; " +
             "-fx-background-color: lightgray";
+    public static final String rootStyle = "-fx-padding: 8px; " +
+            "-fx-background-color: #f2f2f2;";
 
-    public static final String rootStyleWarehouse = "-fx-padding: 8px; " +
-            "-fx-background-color: lightpink";
-
-    public static final String rootStyleYellow = "-fx-padding: 8px; " +
-            "-fx-background-color: lightyellow";
 
     public static final String textFieldStyle = "-fx-font-size: 16;" +
             "-fx-border:none;";
+
+    public static final String labelMulLineStyle= "-fx-font-size: 16px; " +
+            "-fx-background-color: transparent";
+
+    public static final String listViewStyle = "-fx-border-color: #ccc; " +
+            "-fx-border-width: 1px; -fx-background-color: white; -fx-font-size: 14px;";
+
+    public static final String manageStockChildStyle = "-fx-background-color: lightgrey; " +
+            "-fx-border-color: lightpink; " +
+            "-fx-border-width: 3px; " +
+            "-fx-padding: 5px;";
+
+    public static final String manageStockChildStyle1 = "-fx-background-color: lightgrey; " +
+            "-fx-border-color: #00ab06; " +
+            "-fx-border-width: 3px; " +
+            "-fx-padding: 5px;";
     public static final String buttonStyle = "-fx-background-color:#2ba3ff;" +
             "-fx-text-fill:#fefefe;" +
             "-fx-border:none;" +
@@ -100,23 +113,8 @@ public record UIStyle() {
             "-fx-border:none;" +
             "-fx-border-radius:10px;" +
             "-fx-font-size: 15;";
-    public static final String labelMulLineStyle= "-fx-font-size: 16px; " +
-            "-fx-background-color: transparent";
 
-    public static final String listViewStyle = "-fx-border-color: #ccc; " +
-            "-fx-border-width: 1px; -fx-background-color: white; -fx-font-size: 14px;";
-
-    public static final String manageStockChildStyle = "-fx-background-color: lightgrey; " +
-            "-fx-border-color: lightgrey; " +
-            "-fx-border-width: 1px; " +
-            "-fx-padding: 5px;";
-
-    public static final String manageStockChildStyle1 = "-fx-background-color: lightyellow; " +
-            "-fx-border-color: lightyellow; " +
-            "-fx-border-width: 1px; " +
-            "-fx-padding: 5px;";
-
-    public static final String greenFillBtnStyle = "-fx-background-color: green; " +
+    public static final String greenFillBtnStyle = "-fx-background-color: #009900; " +
             "-fx-text-fill: white; -fx-font-size: 14px;";
     public static final String redFillBtnStyle ="-fx-background-color: red; " +
             "-fx-text-fill: white; -fx-font-size: 14px; ";
@@ -124,15 +122,12 @@ public record UIStyle() {
     public static final String grayFillBtnStyle = "-fx-background-color: gray; " +
             "-fx-text-fill: white; -fx-font-size: 14px; ";
 
-    public static final String blueFillBtnStyle ="-fx-background-color: blue; " +
-            "-fx-text-fill: white; -fx-font-size: 14px;";
-
     public static final String alertBtnStyle ="-fx-background-color: green; " +
             "-fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold;";
 
-    public static final String alertTitleLabelStyle = "-fx-font-size: 10px; " +
+    public static final String alertTitleLabelStyle = "-fx-font-size: 17px; " +
             "-fx-font-weight: bold; " +
-            "-fx-text-fill: red; " + "-fx-background-color: lightblue;";
+            "-fx-text-fill: #050505; " + "-fx-background-color: lightpink;";
 
     public static final String alertContentTextAreaStyle = "-fx-font-size: 14px;" +
             "-fx-font-weight: normal;-fx-control-inner-background: lightyellow; -fx-text-fill: darkblue;";

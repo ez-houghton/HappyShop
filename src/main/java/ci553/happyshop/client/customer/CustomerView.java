@@ -45,7 +45,7 @@ public class CustomerView  {
     //four controllers needs updating when program going on
     private ImageView ivProduct; //image area in searchPage
     private Label lbProductInfo;//product text info in searchPage
-    private Label laTrolleyError;
+
     private VBox vbTrolley; //in trolley Page
     private TextArea taReceipt;//in receipt page
 
@@ -58,17 +58,7 @@ public class CustomerView  {
         vbTrolleyPage = CreateTrolleyPage();
         vbReceiptPage = createReceiptPage();
 
-        // Create a divider line
-        /*
-        Line line = new Line(0, 0, 0, HEIGHT);
-        line.setStrokeWidth(4);
-        line.setStroke(Color.rgb(43,163,255));
-        VBox lineContainer = new VBox(line);
-        lineContainer.setPrefWidth(4); // Give it some space
-        lineContainer.setAlignment(Pos.CENTER);
 
-        hbRoot = new HBox(10, vbSearchPage, lineContainer, vbTrolleyPage); //initialize to show trolleyPage
-        */
         hbRoot = new HBox(10, vbSearchPage,  vbTrolleyPage);
         hbRoot.setAlignment(Pos.CENTER);
         hbRoot.setStyle(UIStyle.rootStyle);
@@ -132,8 +122,6 @@ public class CustomerView  {
         ScrollPane trolleyScroll = new ScrollPane(vbTrolley);
         trolleyScroll.setPrefHeight(HEIGHT-50);
         trolleyScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        laTrolleyError = new Label("helloooooooooo");
-        laTrolleyError.setStyle(UIStyle.alertTitleLabelStyle);
         Button btnCancel = new Button("Cancel");
         btnCancel.setOnAction(this::buttonClicked);
         btnCancel.setStyle(UIStyle.cancelButtonStyle);
@@ -144,8 +132,7 @@ public class CustomerView  {
         HBox hbBtns = new HBox(10, btnCancel,btnCheckout);
         hbBtns.setAlignment(Pos.CENTER);
 
-        vbTrolleyPage = new VBox(5, laPageTitle, trolleyScroll,laTrolleyError, hbBtns);
-        /*vbTrolleyPage = new VBox(15, laPageTitle, trolleyScroll, hbBtns);*/
+        vbTrolleyPage = new VBox(5, laPageTitle, trolleyScroll, hbBtns);
         vbTrolleyPage.setPrefWidth(COLUMN_WIDTH);
         vbTrolleyPage.setAlignment(Pos.TOP_CENTER);
         vbTrolleyPage.setStyle("-fx-padding: 15px;");
@@ -168,7 +155,7 @@ public class CustomerView  {
         vbReceiptPage = new VBox(15, laPageTitle, taReceipt, btnCloseReceipt);
         vbReceiptPage.setPrefWidth(COLUMN_WIDTH);
         vbReceiptPage.setAlignment(Pos.TOP_CENTER);
-        vbReceiptPage.setStyle(UIStyle.rootStyleYellow);
+        vbReceiptPage.setStyle(UIStyle.rootStyle);
         return vbReceiptPage;
     }
 
@@ -193,13 +180,15 @@ public class CustomerView  {
     }
 
 
-    public void update(String imageName, String searchResult, ArrayList<Node> trolley, String TrolleyError, String receipt) {
+    public void update(String imageName, String searchResult, ArrayList<Node> trolley, String trolleyError, String receipt) {
 
         ivProduct.setImage(new Image(imageName));
         lbProductInfo.setText(searchResult);
         vbTrolley.getChildren().clear();
         vbTrolley.getChildren().addAll(trolley);
-        laTrolleyError.setText(TrolleyError);
+        if(!trolleyError.isEmpty()){
+            System.out.println("trolleyerror");
+        }
         if (!receipt.isEmpty()) {
             showTrolleyOrReceiptPage(vbReceiptPage);
             taReceipt.setText(receipt);

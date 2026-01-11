@@ -44,7 +44,7 @@ public class OrderTracker {
         Scene scene = new Scene(vbox, WIDTH, HEIGHT);
         Stage window = new Stage();
         window.setScene(scene);
-        window.setTitle("🛒Order Tracker");
+        window.setTitle("Order Tracker");
 
         // Registers the window's position with WinPosManager.
         WinPosManager.registerWindow(window,WIDTH,HEIGHT); //calculate position x and y for this window

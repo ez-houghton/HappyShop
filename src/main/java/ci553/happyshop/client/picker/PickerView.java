@@ -47,7 +47,7 @@ public class PickerView  {
         vbOrderDetailRoot = createOrderDetailRoot();
         scene = new Scene(vbOrderMapRoot, WIDTH, HEIGHT);
         window.setScene(scene);
-        window.setTitle("🛒 HappyShop Order Picker");
+        window.setTitle("HappyShop Picker Portal");
         WinPosManager.registerWindow(window,WIDTH,HEIGHT); //calculate position x and y for this window
         window.show();
 
@@ -68,13 +68,13 @@ public class PickerView  {
         taOrderMap.setPrefSize(WIDTH, HEIGHT - 100);
         taOrderMap.setStyle(UIStyle.textFieldStyle);
 
-        Button btnProgressing = new Button("Progressing");
+        Button btnProgressing = new Button("Mark order as Packing");
         btnProgressing.setOnAction(this::buttonClicked);
         btnProgressing.setStyle(UIStyle.buttonStyle);
 
         VBox vbOrdersListRoot = new VBox(15, laOrderMapRootTitle, taOrderMap, btnProgressing);
         vbOrdersListRoot.setAlignment(Pos.TOP_CENTER);
-        vbOrdersListRoot.setStyle(UIStyle.rootStyleYellow);
+        vbOrdersListRoot.setStyle(UIStyle.rootStyle);
 
         return vbOrdersListRoot;
     }
@@ -105,7 +105,7 @@ public class PickerView  {
         try {
             // Based on the button's text, performs the appropriate action and switches the displayed root.
             switch (btnText) {
-                case "Progressing":
+                case "Mark order as Packing":
                     scene.setRoot(vbOrderDetailRoot); // switch to OrderDetailRoot
                     pickerController.doProgressing();
                     break;

@@ -76,7 +76,6 @@ public class WarehouseView  {
 
     //some elements in searchPage
     TextField tfSearchKeyword; //user typing in it
-    private Label laSearchSummary; //eg. the lable shows "3 products found" after search
     private ObservableList<Product> obeProductList; //observable product list
     ListView<Product> obrLvProducts; //A ListView observes the product list
 
@@ -134,21 +133,15 @@ public class WarehouseView  {
         VBox vbSearchPage = createSearchPage();
         VBox vbProductFormPage = createProductFormPage();
 
-        // Divider line between SearchPage and ProductFormPage
-        Line line = new Line(0, 0, 0, HEIGHT);
-        line.setStrokeWidth(4);
-        line.setStroke(Color.LIGHTGREEN);
-        VBox lineContainer = new VBox(line);
-        lineContainer.setPrefWidth(4);
-        lineContainer.setAlignment(Pos.CENTER);
+
 
         //top level layout manager
-        HBox hbRoot = new HBox(15, vbSearchPage, lineContainer, vbProductFormPage);
-        hbRoot.setStyle(UIStyle.rootStyleWarehouse);
+        HBox hbRoot = new HBox(15, vbSearchPage, vbProductFormPage);
+        hbRoot.setStyle(UIStyle.rootStyle);
 
         Scene scene = new Scene(hbRoot, WIDTH, HEIGHT);
         window.setScene(scene);
-        window.setTitle("Search_Page  🛒🛒HappyShop_Warehouse🛒🛒  ProductForm_Page(Edit & AddNew Product)");
+        window.setTitle("HappyShop Stock Edit Portal");
         WinPosManager.registerWindow(window,WIDTH,HEIGHT); // Registers the window with WinPosManager to
         // dynamically position itself based on its size, and any already displayed windows.
         window.show();
@@ -170,24 +163,23 @@ public class WarehouseView  {
                 throw new RuntimeException(e);
             }
         });
-        Button btnSearch = new Button("🔍");
-        //Button btnSearch = new Button("\uD83D\uDD0D"); // Unicode for 🔍
+        //Button btnSearch = new Button("\\uDD0D");
+        Button btnSearch = new Button("Search"); // Unicode for 🔍
         btnSearch.setOnAction(this::buttonClick);
         btnSearch.setStyle(UIStyle.buttonStyle);
-        HBox hbSearch = new HBox(10, tfSearchKeyword, btnSearch);
+        HBox hbSearch = new HBox(10, tfSearchKeyword);
         hbSearch.setAlignment(Pos.CENTER);
 
-        laSearchSummary = new Label("Search Summary");
-        laSearchSummary.setStyle(UIStyle.labelStyle);
+
         Button btnEdit = new Button("Edit");
         btnEdit.setStyle(UIStyle.greenFillBtnStyle);
         btnEdit.setOnAction(this::buttonClick);
 
         Button btnDelete = new Button("Delete");
-        btnDelete.setStyle(UIStyle.grayFillBtnStyle);
+        btnDelete.setStyle(UIStyle.cancelButtonStyle);
         btnDelete.setOnAction(this::buttonClick);
 
-        HBox hbLaBtns = new HBox(10, laSearchSummary, btnEdit,btnDelete);
+        HBox hbLaBtns = new HBox(10,btnSearch,  btnEdit,btnDelete);
         hbLaBtns.setAlignment(Pos.CENTER);
         hbLaBtns.setPadding(new Insets(5)); //setPadding only works on Layout manager
         //hbLaBtns.setStyle("-fx-padding: 5px;"); //setStyle works on any Node (eg. layout manager, controls)
@@ -260,7 +252,7 @@ public class WarehouseView  {
         // Set default selected value, so only when value changed trigger setOnAction
         cbProductFormMode.setValue("Edit Existing Product in Stock");
 
-        vbEditProduct = createEditProdcutChild();
+        vbEditProduct = createEditProductChild();
         disableEditProductChild(true); //disable editable component until user selects a product and cilck btnEdit
         vbNewProduct = createNewProductChild();
 
@@ -286,7 +278,7 @@ public class WarehouseView  {
     }
 
 
-    private VBox createEditProdcutChild() {
+    private VBox createEditProductChild() {
         //HBox for Id Label and TextField
         Label laId = new Label("ID"+" ".repeat(8));
         laId.setStyle(UIStyle.labelStyle);
@@ -367,7 +359,7 @@ public class WarehouseView  {
         btnCancelEdit.setOnAction(this::buttonClick);
 
         btnSubmitEdit = new Button("Submit");
-        btnSubmitEdit.setStyle(UIStyle.blueFillBtnStyle);
+        btnSubmitEdit.setStyle(UIStyle.buttonStyle);
         btnSubmitEdit.setPrefWidth(100);
         btnSubmitEdit.setOnAction(this::buttonClick);
 
@@ -441,7 +433,7 @@ public class WarehouseView  {
         btnClear.setOnAction(this::buttonClick);
 
         Button btnAddNewPro = new Button("Submit");
-        btnAddNewPro.setStyle(UIStyle.blueFillBtnStyle);
+        btnAddNewPro.setStyle(UIStyle.buttonStyle);
         btnAddNewPro.setPrefWidth(100);
         btnAddNewPro.setOnAction(this::buttonClick);
         // HBox for OK & clear Buttons
@@ -517,9 +509,7 @@ public class WarehouseView  {
     //update the product listVew of serachPage
     void updateObservableProductList( ArrayList<Product> productList) {
         int proCounter = productList.size();
-        System.out.println(proCounter);
-        laSearchSummary.setText(proCounter + " products found");
-        laSearchSummary.setVisible(true);
+        System.out.println(proCounter+" products found");
         obeProductList.clear();
         obeProductList.addAll(productList);
     }
