@@ -11,8 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -22,8 +20,7 @@ import java.util.ArrayList;
 
 /**
  * The CustomerView is separated into two sections by a line :
- *
- * 1. Search Page – Always visible, allowing customers to browse and search for products.
+  * 1. Search Page – Always visible, allowing customers to browse and search for products.
  * 2. the second page – display either the Trolley Page or the Receipt Page
  *    depending on the current context. Only one of these is shown at a time.
  */
@@ -53,6 +50,10 @@ public class CustomerView  {
     // (e.g., positioning the removeProductNotifier when needed).
     private Stage viewWindow;
 
+    /**
+     * Initiates the customer window
+     * @param window the stage to place customer window into.
+     */
     public void start(Stage window) {
         VBox vbSearchPage = createSearchPage();
         vbTrolleyPage = CreateTrolleyPage();
@@ -71,6 +72,10 @@ public class CustomerView  {
         viewWindow=window;// Sets viewWindow to this window for future reference and management.
     }
 
+    /**
+     * Builds the search section of the customer page.
+     * @return VBox. Customer search page (left half)
+     */
     private VBox createSearchPage() {
         Label laPageTitle = new Label("Search Products");
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
@@ -114,6 +119,10 @@ public class CustomerView  {
         return vbSearchPage;
     }
 
+    /**
+     * Builds trolley section of customer view
+     * @return VBox customer trolley page. (right half of window)
+     */
     private VBox CreateTrolleyPage() {
         Label laPageTitle = new Label("🛒🛒  Trolley 🛒🛒");
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
@@ -139,6 +148,10 @@ public class CustomerView  {
         return vbTrolleyPage;
     }
 
+    /**
+     * Builds receipt page for customer window
+     * @return VBox receipt page (right half when customer has checked out)
+     */
     private VBox createReceiptPage() {
         Label laPageTitle = new Label("Receipt");
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
@@ -159,7 +172,10 @@ public class CustomerView  {
         return vbReceiptPage;
     }
 
-
+    /**
+     * Handler for buttons
+     * @param event the event which triggers method.
+     */
     private void buttonClicked(ActionEvent event) {
         try{
             Button btn = (Button)event.getSource();
@@ -179,7 +195,14 @@ public class CustomerView  {
         }
     }
 
-
+    /**
+     * Updates the view
+     * @param imageName new image
+     * @param searchResult new search result
+     * @param trolley new trolley output
+     * @param trolleyError new trolley error (if exists)
+     * @param receipt new receipt output
+     */
     public void update(String imageName, String searchResult, ArrayList<Node> trolley, String trolleyError, String receipt) {
 
         ivProduct.setImage(new Image(imageName));

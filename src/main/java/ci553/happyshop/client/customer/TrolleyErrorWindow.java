@@ -24,7 +24,7 @@ public class TrolleyErrorWindow {
      * @param trolleyError The error.
      */
     public void createWindow(String trolleyError) {
-        Label laTitle = new Label("Cannot checkout!"); // ⚠️
+        Label laTitle = new Label("Cannot checkout!");
         laTitle.setStyle(UIStyle.labelTitleStyle);
         Label error = new Label(trolleyError+"\nPlease edit your trolley and try again.");
         error.setStyle(UIStyle.labelStyle);
@@ -32,6 +32,7 @@ public class TrolleyErrorWindow {
         closeButton.setOnAction(e ->{
             window.close();
         });
+
         closeButton.setStyle(UIStyle.cancelButtonStyle);
         VBox main = new VBox(9,laTitle,error,closeButton);
 

@@ -8,10 +8,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,7 +22,6 @@ public class SelectProductWindow {
     public CustomerView cusView; //tracking the window of cusView
 
     private final int WIDTH = UIStyle.selectWindowWidth;
-    private final int HEIGHT = UIStyle.selectWindowHeight;
 
     private Stage window; //window for Select Product
     private Scene scene; // Scene for Select Product
@@ -56,7 +53,6 @@ public class SelectProductWindow {
         });
         selectButton.setStyle(UIStyle.buttonStyle);
         VBox container =  new VBox(iv, text,selectButton);
-        /*container.setStyle("-fx-border-color:black");*/
         container.setAlignment(Pos.CENTER);
         return container;
     }
@@ -85,7 +81,6 @@ public class SelectProductWindow {
             window.close();
         });
         closeButton.setStyle(UIStyle.cancelButtonStyle);
-        // Top level GridPane layout
         VBox main = new VBox(9,laTitle,itemList,closeButton);
 
         main.setStyle(UIStyle.rootStyle);

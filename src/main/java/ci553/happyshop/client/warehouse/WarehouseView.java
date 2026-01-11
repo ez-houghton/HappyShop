@@ -15,8 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -36,14 +34,10 @@ import javafx.scene.input.MouseEvent;
  * ➖ (Minus): \u2796
  * 🛒 (Shopping Cart): \uD83D\uDED2
  * 🏬 (Department Store): \uD83C\uDFEC
- *
  * eg Button btnSearch = new Button("\uD83D\uDD0D");
  *    Button btnSearch = new Button("🔍");
  *    case "\uD83D\uDD0D",
  *    case "🔍"
- */
-
-/**
  * The Warehouse interface (WarehouseView) contains two main pages:
  * a divider line is between the two pages
  * 1. Search Page:
@@ -51,7 +45,6 @@ import javafx.scene.input.MouseEvent;
  *    - This list is updated by the model when searching the database.
  *    - A ListView observes the product list. Whenever the list changes,
  *      the ListView automatically updates itself based on the specified cell factory.
- *
  * 2. Product Form Page:
  *    - The form page contains a ComboBox for selecting between two actions:
  *      * Editing an existing product
@@ -129,6 +122,10 @@ public class WarehouseView  {
     String imageUriNewPro; //user slected image Uri
     // URI of the image selected by the user for a new product. This value is retrieved from the image chooser.
 
+    /**
+     * Opens the Warehouse window
+     * @param window stage to open on.
+     */
     public void start(Stage window) {
         VBox vbSearchPage = createSearchPage();
         VBox vbProductFormPage = createProductFormPage();
@@ -148,6 +145,10 @@ public class WarehouseView  {
         viewWindow = window; // Sets the global viewWindow reference to this window for future reference and management.
     }
 
+    /**
+     * Builds Search page (left half)
+     * @return VBox containing content of search page
+     */
     private VBox createSearchPage() {
         Label laTitle = new Label("Search by product ID/Name");
         laTitle.setStyle(UIStyle.labelTitleStyle);
@@ -157,9 +158,7 @@ public class WarehouseView  {
         tfSearchKeyword.setOnAction(actionEvent -> {
             try {
                 controller.process("🔍");  //pressing enter can also do search
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
+            } catch (SQLException | IOException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -193,15 +192,14 @@ public class WarehouseView  {
 
         VBox vbSearchResult = new VBox(5,hbLaBtns, obrLvProducts);
 
-        /**
+        /*
          * When is setCellFactory() Needed?
          * If you want to customize each row’s content (e.g.,images, buttons, labels, etc.).
          * If you need special formatting (like colors or borders).
-         *
          * When is setCellFactory() NOT Needed?
          * Each row is just plain text without images or formatting.
          */
-        obrLvProducts.setCellFactory(param -> new ListCell<Product>() {
+        obrLvProducts.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Product product, boolean empty) {
                 super.updateItem(product, empty);
@@ -238,13 +236,17 @@ public class WarehouseView  {
 
         return vbSearchPage;
 
-        /** NOTE for make image
+        /* NOTE for make image
          * user selected image at runtime, like with a FileChooser, you cannot use getResource().
          * getResource() is only for static files already bundled inside app.
          * User-selected files are real files on the computer, not inside the app resources.
          */
     }
 
+    /**
+     * Builds right half of Warehouse page
+     * @return VBox containing the right half of window
+     */
     private VBox createProductFormPage() {
         cbProductFormMode = new ComboBox<>();
         cbProductFormMode.setStyle(UIStyle.comboBoxStyle);
@@ -277,7 +279,10 @@ public class WarehouseView  {
         return vbProductFormPage;
     }
 
-
+    /**
+     * Builds edit form
+     * @return VBox containing edit form (to place in right half)
+     */
     private VBox createEditProductChild() {
         //HBox for Id Label and TextField
         Label laId = new Label("ID"+" ".repeat(8));
@@ -374,7 +379,10 @@ public class WarehouseView  {
         return vbEditStockChild;
     }
 
-
+    /**
+     * Builds add form
+     * @return VBox containing add form (to be placed on right half of Window)
+     */
     private VBox createNewProductChild() {
         //HBox for Id Label and TextField
         Label laId = new Label("ID"+ " ".repeat(9));
@@ -459,7 +467,10 @@ public class WarehouseView  {
         btnSubmitEdit.setDisable(disable);
     }
 
-
+    /**
+     * Handler for button clicks
+     * @param event event that triggers handler
+     */
     private void buttonClick(ActionEvent event)  {
         Button btn= (Button)event.getSource();
         String action = btn.getText();

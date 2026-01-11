@@ -21,9 +21,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- * TODO
- * You can either directly modify the CustomerModel class to implement the required tasks,
- * or create a subclass of CustomerModel and override specific methods where appropriate.
+ * Model for Customer Package
  */
 public class CustomerModel {
     public CustomerView cusView;
@@ -42,7 +40,7 @@ public class CustomerModel {
 
     /**
      * Searches database for products matching the name or ID in the Search box
-     * @throws SQLException
+     * @throws SQLException if SQL error
      */
     void search() throws SQLException{
         String prodInput = cusView.tfSearch.getText().trim();
@@ -73,7 +71,7 @@ public class CustomerModel {
      * Searches database for product by name. opens a window to specify selection if more than one result returned.
      * @param prodInput searchable name
      * @return Product which is selected.
-     * @throws SQLException
+     * @throws SQLException  if SQL error
      */
     private Product searchByName(String prodInput) throws SQLException{
         SelectProductWindow productWindow = new SelectProductWindow();
@@ -86,11 +84,11 @@ public class CustomerModel {
         else{return null;}
     }
 
-
+    /**
+     * Adds a product to the trolley list. If no product has been searched, outputs an error.
+     */
     void addToTrolley(){
         if(theProduct!= null){
-            // trolley.add(theProduct) — Product is appended to the end of the trolley.
-            // To keep the trolley organized, add code here or call a method that:
             trolley.add(theProduct);
         }
         else{
@@ -101,6 +99,11 @@ public class CustomerModel {
         updateView();
     }
 
+    /**
+     * Attempts to checkout with the user's current trolley
+     * @throws IOException if issue with input or output from files
+     * @throws SQLException if SQL error
+     */
     void checkOut() throws IOException, SQLException {
         if(!trolley.isEmpty()){
             // Group the products in the trolley by productId to optimize stock checking
@@ -137,7 +140,7 @@ public class CustomerModel {
 
                 //You can use the provided RemoveProductNotifier class and its showRemovalMsg method for this purpose.
                 //remember close the message window where appropriate (using method closeNotifierWindow() of RemoveProductNotifier class)
-                displayTaTrolley = "Checkout failed due to insufficient stock:\n" + errorMsg.toString();
+                displayTaTrolley = "Checkout failed due to insufficient stock:\n" + errorMsg;
                 System.out.println("stock is not enough");
             }
         }
@@ -148,9 +151,12 @@ public class CustomerModel {
         updateView();
     }
 
+
     /**
-     * Groups products by their productId to optimize database queries and updates.
+     *Groups products by their productId to optimize database queries and updates.
      * By grouping products, we can check the stock for a given `productId` once, rather than repeatedly
+     * @param proList list of ungrouped products
+     * @return List of grouped products
      */
     private ArrayList<Product> groupProductsById(ArrayList<Product> proList) {
         Map<String, Product> grouped = new HashMap<>();
@@ -165,19 +171,31 @@ public class CustomerModel {
                         p.getProductImageName(),p.getUnitPrice(),p.getStockQuantity()));
             }
         }
-        ArrayList<Product> ret = new ArrayList<Product>(grouped.values());
+        ArrayList<Product> ret = new ArrayList<>(grouped.values());
         Collections.sort(ret);
         return ret;
     }
 
+    /**
+     * Clears current Trolley
+     */
     void cancel(){
         trolley.clear();
         displayTaTrolley="";
         updateView();
     }
+
+    /**
+     * Clears receipt.
+     */
     void closeReceipt(){
         displayTaReceipt="";
     }
+
+    /**
+     * Creates the trolley object to be outputted to user
+     * @return trolleyList. VBox full of Hboxes, which has product information for trolleyed products
+     */
     private ArrayList<Node> createTrolleyList(){
         ArrayList<Node> trolleyList= new ArrayList<>();
         for(Product pr : groupProductsById(trolley)) {
@@ -200,25 +218,32 @@ public class CustomerModel {
             addButton.setStyle(UIStyle.trolleyButtons);
 
             TextField pDesc = new TextField(pr.getProductDescription());
-            pDesc.setEditable(false);        /*pDesc.setPrefWidth(100);*/
-
+            pDesc.setEditable(false);
             pDesc.setStyle(UIStyle.trolleyStyle);
+
             TextField pQuant = new TextField(Integer.toString(pr.getOrderedQuantity()));
             pQuant.setPrefWidth(50);    pQuant.setEditable(false);
             pQuant.setStyle(UIStyle.trolleyStyle);
+
             TextField pPrice = new TextField(String.format("%.2f",(pr.getOrderedQuantity() * pr.getUnitPrice())));
             pPrice.setEditable(false);
             pPrice.setStyle(UIStyle.trolleyStyle);
             pPrice.setPrefWidth(70);
+
             HBox itemInfo = new HBox(addButton,subButton, pDesc, pQuant, pPrice);
             itemInfo.setAlignment(Pos.CENTER);
             itemInfo.setMaxWidth(290);
             itemInfo.setPrefWidth(290);
             itemInfo.setPadding(new Insets(0,0,3,0));
+
             trolleyList.add(itemInfo);
         }
         return trolleyList;
     }
+
+    /**
+     * Updates the view with model's new information.
+     */
     void updateView() {
         if(theProduct != null){
             imageName = theProduct.getProductImageName();
@@ -238,8 +263,4 @@ public class CustomerModel {
      //Path.toUri(): Converts a Path object (a file or a directory path) to a URI object.
      //File.toURI(): Converts a File object (a file on the filesystem) to a URI object
 
-    //for test only
-    public ArrayList<Product> getTrolley() {
-        return trolley;
-    }
 }
