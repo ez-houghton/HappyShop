@@ -6,7 +6,9 @@ import ci553.happyshop.storageAccess.DatabaseRW;
 import ci553.happyshop.orderManagement.OrderHub;
 import ci553.happyshop.utility.StorageLocation;
 import ci553.happyshop.utility.ProductListFormatter;
+import ci553.happyshop.utility.UIStyle;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -194,26 +196,25 @@ public class CustomerModel {
                 }
                 updateView();
             });
-            subButton.setPadding(new Insets(2,0,2,0));
-            addButton.setPadding(new Insets(2,0,2,0));
-            subButton.setMinWidth(20);      addButton.setMinWidth(20);
-            TextField pID = new TextField(pr.getProductId());
-            pID.setEditable(false);         pID.setPrefWidth(110);
-            pID.setPadding(new Insets(2,0,2,0));
+            subButton.setStyle(UIStyle.trolleyButtons);
+            addButton.setStyle(UIStyle.trolleyButtons);
 
             TextField pDesc = new TextField(pr.getProductDescription());
-            pDesc.setEditable(false);        pDesc.setPrefWidth(200);
-            pDesc.setPadding(new Insets(2,0,2,0));
+            pDesc.setEditable(false);        /*pDesc.setPrefWidth(100);*/
 
+            pDesc.setStyle(UIStyle.trolleyStyle);
             TextField pQuant = new TextField(Integer.toString(pr.getOrderedQuantity()));
-            pQuant.setPrefWidth(100);    pQuant.setEditable(false);
-            pQuant.setPadding(new Insets(2,0,2,0));
-
+            pQuant.setPrefWidth(50);    pQuant.setEditable(false);
+            pQuant.setStyle(UIStyle.trolleyStyle);
             TextField pPrice = new TextField(String.format("%.2f",(pr.getOrderedQuantity() * pr.getUnitPrice())));
             pPrice.setEditable(false);
-            pPrice.setPadding(new Insets(2,0,2,0));
-
-            HBox itemInfo = new HBox(addButton,subButton,pID, pDesc, pQuant, pPrice);
+            pPrice.setStyle(UIStyle.trolleyStyle);
+            pPrice.setPrefWidth(70);
+            HBox itemInfo = new HBox(addButton,subButton, pDesc, pQuant, pPrice);
+            itemInfo.setAlignment(Pos.CENTER);
+            itemInfo.setMaxWidth(290);
+            itemInfo.setPrefWidth(290);
+            itemInfo.setPadding(new Insets(0,0,3,0));
             trolleyList.add(itemInfo);
         }
         return trolleyList;

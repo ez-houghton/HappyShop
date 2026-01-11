@@ -66,7 +66,7 @@ public class PickerView  {
 
         taOrderMap.setEditable(false);
         taOrderMap.setPrefSize(WIDTH, HEIGHT - 100);
-        taOrderMap.setStyle(UIStyle.textFiledStyle);
+        taOrderMap.setStyle(UIStyle.textFieldStyle);
 
         Button btnProgressing = new Button("Progressing");
         btnProgressing.setOnAction(this::buttonClicked);
@@ -86,7 +86,7 @@ public class PickerView  {
         taOrderDetail.setEditable(false);
         taOrderDetail.setPrefSize(WIDTH, HEIGHT - 100);
         taOrderDetail.setText("Order details");
-        taOrderDetail.setStyle(UIStyle.textFiledStyle);
+        taOrderDetail.setStyle(UIStyle.textFieldStyle);
 
         Button btnCollected = new Button("Customer Collected");
         btnCollected.setOnAction(this::buttonClicked);

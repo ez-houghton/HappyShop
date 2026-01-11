@@ -59,58 +59,62 @@ public class CustomerView  {
         vbReceiptPage = createReceiptPage();
 
         // Create a divider line
+        /*
         Line line = new Line(0, 0, 0, HEIGHT);
         line.setStrokeWidth(4);
-        line.setStroke(Color.PINK);
+        line.setStroke(Color.rgb(43,163,255));
         VBox lineContainer = new VBox(line);
         lineContainer.setPrefWidth(4); // Give it some space
         lineContainer.setAlignment(Pos.CENTER);
 
         hbRoot = new HBox(10, vbSearchPage, lineContainer, vbTrolleyPage); //initialize to show trolleyPage
+        */
+        hbRoot = new HBox(10, vbSearchPage,  vbTrolleyPage);
         hbRoot.setAlignment(Pos.CENTER);
         hbRoot.setStyle(UIStyle.rootStyle);
 
         Scene scene = new Scene(hbRoot, WIDTH, HEIGHT);
         window.setScene(scene);
-        window.setTitle("🛒 HappyShop Customer Client");
+        window.setTitle("HappyShop Customer Client");
         WinPosManager.registerWindow(window,WIDTH,HEIGHT); //calculate position x and y for this window
         window.show();
         viewWindow=window;// Sets viewWindow to this window for future reference and management.
     }
 
     private VBox createSearchPage() {
-        Label laPageTitle = new Label("Search by Product ID/Name");
+        Label laPageTitle = new Label("Search Products");
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
 
-
-        Label laName = new Label("Name:");
-        laName.setStyle(UIStyle.labelStyle);
         tfSearch = new TextField();
         tfSearch.setPromptText("Product Name");
-        tfSearch.setStyle(UIStyle.textFiledStyle);
-        HBox hbName = new HBox(10, laName, tfSearch);
+        tfSearch.setStyle(UIStyle.textFieldStyle);
+        tfSearch.setPrefWidth(COLUMN_WIDTH-20);
+        HBox hbName = new HBox(10, tfSearch);
+        hbName.setAlignment(Pos.CENTER);
 
-        Label laPlaceHolder = new Label(  " ".repeat(15)); //create left-side spacing so that this HBox aligns with others in the layout.
         Button btnSearch = new Button("Search");
         btnSearch.setStyle(UIStyle.buttonStyle);
         btnSearch.setOnAction(this::buttonClicked);
+        btnSearch.setAlignment(Pos.CENTER_LEFT);
         Button btnAddToTrolley = new Button("Add to Trolley");
         btnAddToTrolley.setStyle(UIStyle.buttonStyle);
         btnAddToTrolley.setOnAction(this::buttonClicked);
-        HBox hbBtns = new HBox(10, laPlaceHolder,btnSearch, btnAddToTrolley);
-
+        btnAddToTrolley.setAlignment(Pos.CENTER_RIGHT);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        HBox hbBtns = new HBox(10, btnSearch,spacer, btnAddToTrolley);
         ivProduct = new ImageView("imageHolder.jpg");
-        ivProduct.setFitHeight(60);
-        ivProduct.setFitWidth(60);
+        ivProduct.setFitWidth(COLUMN_WIDTH*0.2);
         ivProduct.setPreserveRatio(true); // Image keeps its original shape and fits inside 60×60
         ivProduct.setSmooth(true); //make it smooth and nice-looking
 
         lbProductInfo = new Label("Thank you for shopping with us.");
         lbProductInfo.setWrapText(true);
         lbProductInfo.setMinHeight(Label.USE_PREF_SIZE);  // Allow auto-resize
+        lbProductInfo.setPrefWidth(COLUMN_WIDTH*.8);
         lbProductInfo.setStyle(UIStyle.labelMulLineStyle);
         HBox hbSearchResult = new HBox(5, ivProduct, lbProductInfo);
-        hbSearchResult.setAlignment(Pos.CENTER_LEFT);
+        hbSearchResult.setAlignment(Pos.CENTER);
 
         VBox vbSearchPage = new VBox(15, laPageTitle, hbName, hbBtns, hbSearchResult);
         vbSearchPage.setPrefWidth(COLUMN_WIDTH);
@@ -125,24 +129,23 @@ public class CustomerView  {
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
 
         vbTrolley = new VBox();
-        /*taTrolley.setFont(Font.font("Monospace"));
-        taTrolley.setEditable(false);
-        taTrolley.setPrefSize(WIDTH/2, HEIGHT-50);
-*/      laTrolleyError = new Label();
+        ScrollPane trolleyScroll = new ScrollPane(vbTrolley);
+        trolleyScroll.setPrefHeight(HEIGHT-50);
+        trolleyScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        laTrolleyError = new Label("helloooooooooo");
         laTrolleyError.setStyle(UIStyle.alertTitleLabelStyle);
         Button btnCancel = new Button("Cancel");
         btnCancel.setOnAction(this::buttonClicked);
-        btnCancel.setStyle(UIStyle.buttonStyle);
-
+        btnCancel.setStyle(UIStyle.cancelButtonStyle);
         Button btnCheckout = new Button("Check Out");
         btnCheckout.setOnAction(this::buttonClicked);
         btnCheckout.setStyle(UIStyle.buttonStyle);
 
         HBox hbBtns = new HBox(10, btnCancel,btnCheckout);
-        hbBtns.setStyle("-fx-padding: 15px;");
         hbBtns.setAlignment(Pos.CENTER);
 
-        vbTrolleyPage = new VBox(15, laPageTitle, vbTrolley,laTrolleyError, hbBtns);
+        vbTrolleyPage = new VBox(5, laPageTitle, trolleyScroll,laTrolleyError, hbBtns);
+        /*vbTrolleyPage = new VBox(15, laPageTitle, trolleyScroll, hbBtns);*/
         vbTrolleyPage.setPrefWidth(COLUMN_WIDTH);
         vbTrolleyPage.setAlignment(Pos.TOP_CENTER);
         vbTrolleyPage.setStyle("-fx-padding: 15px;");

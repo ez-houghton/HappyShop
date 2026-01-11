@@ -48,7 +48,7 @@ public record UIStyle() {
     public static final int selectWindowHeight = 230;
 
     public static final String labelTitleStyle ="-fx-font-weight: bold; " +
-            "-fx-font-size: 16px; -fx-text-fill: purple;";
+            "-fx-font-size: 16px; -fx-text-fill: #005799;";
 
     public static final String labelStyle = "-fx-font-weight: bold; " +
             "-fx-font-size: 14px; " +
@@ -58,11 +58,23 @@ public record UIStyle() {
     public static final String comboBoxStyle ="-fx-font-weight: bold; " +
             "-fx-font-size: 14px;";
 
-    public static final String buttonStyle= "-fx-font-size: 15";
-
+    /*customer window*/
     public static final String rootStyle = "-fx-padding: 8px; " +
-            "-fx-background-color: lightgreen";
-
+            "-fx-background-color: #f2f2f2;";
+    public static final String trolleyStyle = "-fx-font-size:12px;" +
+            "-fx-padding:2px,0px,2px,0px;" +
+            "-fx-margin:0;" +
+            "-fx-background-color:transparent;" +
+            "-fx-border:0; -fx-border-radius:0;" +
+            "-fx-alignment:CENTER_LEFT";
+    public static final String trolleyButtons = "-fx-font-size:14px;" +
+            "-fx-padding:2px,0,2px,0;" +
+            "-fx-margin:3px;" +
+            "-fx-min-width:20px;" +
+            "-fx-max-width:20px;" +
+            "-fx-background-color:#2ba3ff;" +
+            "-fx-border:0;" +
+            "-fx-text-fill:#fefefe";
     public static final String rootStyleBlue = "-fx-padding: 8px; " +
             "-fx-background-color: lightblue";
 
@@ -75,10 +87,21 @@ public record UIStyle() {
     public static final String rootStyleYellow = "-fx-padding: 8px; " +
             "-fx-background-color: lightyellow";
 
-    public static final String textFiledStyle = "-fx-font-size: 16";
+    public static final String textFieldStyle = "-fx-font-size: 16;" +
+            "-fx-border:none;";
+    public static final String buttonStyle = "-fx-background-color:#2ba3ff;" +
+            "-fx-text-fill:#fefefe;" +
+            "-fx-border:none;" +
+            "-fx-border-radius:10px;" +
+            "-fx-font-size: 15;";
 
+    public static final String cancelButtonStyle = "-fx-background-color:#ff3333;" +
+            "-fx-text-fill:#fefefe;" +
+            "-fx-border:none;" +
+            "-fx-border-radius:10px;" +
+            "-fx-font-size: 15;";
     public static final String labelMulLineStyle= "-fx-font-size: 16px; " +
-            "-fx-background-color: lightpink";
+            "-fx-background-color: transparent";
 
     public static final String listViewStyle = "-fx-border-color: #ccc; " +
             "-fx-border-width: 1px; -fx-background-color: white; -fx-font-size: 14px;";

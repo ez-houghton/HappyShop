@@ -160,7 +160,7 @@ public class WarehouseView  {
         laTitle.setStyle(UIStyle.labelTitleStyle);
 
         tfSearchKeyword = new TextField();
-        tfSearchKeyword.setStyle(UIStyle.textFiledStyle);
+        tfSearchKeyword.setStyle(UIStyle.textFieldStyle);
         tfSearchKeyword.setOnAction(actionEvent -> {
             try {
                 controller.process("🔍");  //pressing enter can also do search
@@ -356,7 +356,7 @@ public class WarehouseView  {
         taDescriptionEdit = new TextArea();
         taDescriptionEdit.setPrefSize(COLUMN_WIDTH-20, 20);
         taDescriptionEdit.setWrapText(true);
-        taDescriptionEdit.setStyle(UIStyle.textFiledStyle);
+        taDescriptionEdit.setStyle(UIStyle.textFieldStyle);
         VBox vbDescription = new VBox(laDes, taDescriptionEdit);
         vbDescription.setAlignment(Pos.CENTER_LEFT);
 
@@ -430,7 +430,7 @@ public class WarehouseView  {
         taDescriptionNewPro = new TextArea();
         taDescriptionNewPro.setPrefSize(COLUMN_WIDTH-20, 20);
         taDescriptionNewPro.setWrapText(true);
-        taDescriptionNewPro.setStyle(UIStyle.textFiledStyle);
+        taDescriptionNewPro.setStyle(UIStyle.textFieldStyle);
         VBox vbDescription = new VBox(laDes, taDescriptionNewPro);
         vbDescription.setAlignment(Pos.CENTER_LEFT);
 

@@ -4,6 +4,7 @@ import ci553.happyshop.catalogue.Product;
 import ci553.happyshop.utility.StorageLocation;
 import ci553.happyshop.utility.UIStyle;
 import ci553.happyshop.utility.WindowBounds;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,7 +28,7 @@ public class SelectProductWindow {
 
     private Stage window; //window for Select Product
     private Scene scene; // Scene for Select Product
-    private HBox itemList;
+    private GridPane itemList;
     public Product selected;
 
     /**
@@ -41,19 +42,22 @@ public class SelectProductWindow {
         Path imageFullPath = Paths.get(relativeImageUrl).toAbsolutePath();
         String imURL = imageFullPath.toUri().toString();
         ImageView iv = new ImageView(imURL);
-        TextArea text = new TextArea();
-        text.setEditable(false);
+        iv.setFitHeight(60);
+        iv.setFitWidth(60);
+        Label text = new Label();
         String baseInfo = String.format("Product_Id: %s\n%s,\nPrice: £%.2f", prod.getProductId(), prod.getProductDescription(), prod.getUnitPrice());
         String quantityInfo = String.format("\n%d units left.", prod.getStockQuantity());
-        text.setPrefRowCount(4);
         text.setText(baseInfo+quantityInfo);
+        text.setStyle(UIStyle.labelMulLineStyle);
         Button selectButton= new Button("Select");
         selectButton.setOnAction(e ->{
             selected=prod;
             window.close();
         });
+        selectButton.setStyle(UIStyle.buttonStyle);
         VBox container =  new VBox(iv, text,selectButton);
-        container.setStyle("-fx-border-color:black");
+        /*container.setStyle("-fx-border-color:black");*/
+        container.setAlignment(Pos.CENTER);
         return container;
     }
 
@@ -65,11 +69,14 @@ public class SelectProductWindow {
      */
     public void createWindow(ArrayList<Product> prodList) {
         Label laTitle = new Label("Select a Product!"); // ⚠️
-        laTitle.setStyle(UIStyle.alertTitleLabelStyle);
-        itemList= new HBox();
-        itemList.setStyle("-fx-border-color:black");
+        laTitle.setStyle(UIStyle.labelTitleStyle);
+        itemList= new GridPane();
+        itemList.setHgap(5);
+        itemList.setVgap(5);
+        int count=0;
         for(Product i : prodList){
-            itemList.getChildren().add(showItem(i));
+            itemList.add(showItem(i),count%5, (count/5));
+            count+=1;
         }
 
         Button closeButton = new Button("None of these.");
@@ -77,21 +84,19 @@ public class SelectProductWindow {
             selected=null;
             window.close();
         });
+        closeButton.setStyle(UIStyle.cancelButtonStyle);
         // Top level GridPane layout
-        GridPane pane = new GridPane();
-        pane.setHgap(5);
-        pane.setVgap(5);
-        pane.add(laTitle, 0, 0);
+        VBox main = new VBox(9,laTitle,itemList,closeButton);
 
-        pane.add(itemList,0,1);
-        pane.add(closeButton, 0, 2);
-        pane.setStyle(UIStyle.rootStyleGray);
+        main.setStyle(UIStyle.rootStyle);
+        main.setAlignment(Pos.TOP_CENTER);
 
-        scene = new Scene(pane, WIDTH, HEIGHT);
+        scene = new Scene(main);
 
         window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL); //Sets window as forced, cannot select any other window until this is closed
         window.setTitle("Select a Product");
+
         window.setScene(scene);
 
         //get bounds of betterCustomer window which trigers the window

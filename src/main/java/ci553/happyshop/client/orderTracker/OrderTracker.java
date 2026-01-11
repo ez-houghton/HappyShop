@@ -35,7 +35,7 @@ public class OrderTracker {
 
         taDisplay = new TextArea();
         taDisplay.setEditable(false);
-        taDisplay.setStyle(UIStyle.textFiledStyle);
+        taDisplay.setStyle(UIStyle.textFieldStyle);
 
         VBox vbox = new VBox(10,laTitle, taDisplay);
         vbox.setAlignment(Pos.TOP_CENTER);
