@@ -213,6 +213,7 @@ public class CustomerView  {
             TrolleyErrorWindow t = new TrolleyErrorWindow();
             t.cusView=this;
             t.createWindow(trolleyError);
+
         }
         if (!receipt.isEmpty()) {
             showTrolleyOrReceiptPage(vbReceiptPage);

@@ -258,6 +258,7 @@ public class CustomerModel {
         }
 
         cusView.update(imageName, displayLaSearchResult, createTrolleyList(),displayTaTrolley,displayTaReceipt);
+        displayTaTrolley="";
     }
      // extra notes:
      //Path.toUri(): Converts a Path object (a file or a directory path) to a URI object.

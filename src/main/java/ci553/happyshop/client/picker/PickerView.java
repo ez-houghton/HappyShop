@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * The Order Picker window is for staff to prepare customer's order.
@@ -106,6 +107,7 @@ public class PickerView  {
             // Based on the button's text, performs the appropriate action and switches the displayed root.
             switch (btnText) {
                 case "Mark order as Packing":
+                    if(taOrderMap.getParagraphs().toString().equals("[]")){break;}// dont move to customer collect window if no orders.
                     scene.setRoot(vbOrderDetailRoot); // switch to OrderDetailRoot
                     pickerController.doProgressing();
                     break;
